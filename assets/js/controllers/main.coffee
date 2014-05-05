@@ -1,14 +1,14 @@
 mainController = ($scope, $location, pollService) ->
   $scope.holla = 'dolla bill yaaaaallll'
 
-  console.log pollService, pollService.get()
+  console.log pollService, pollService.getAll()
 
-  if pollService.get().length == 0
+  if pollService.getAll().length == 0
     pollService.create 'new poll', ['option1', 'option2']
 
-  console.log pollService.get()
+  console.log pollService.getAll()
 
-  $scope.$watch pollService.get, (polls) ->
+  $scope.$watch pollService.getAll, (polls) ->
     $scope.polls = polls
   ,
     true

@@ -6,9 +6,7 @@ app.service 'pollService', ()->
 
       @pollOptions = []
 
-      console.log option for option in pollOptions
-
-      @addPollOption option for option in pollOptions
+      @addPollOption option for option in pollOptions if pollOptions?
 
     addPollOption: (name, votes) ->
       @pollOptions.push
@@ -25,7 +23,10 @@ app.service 'pollService', ()->
   polls = []
 
   get: (index)->
-    polls[index] or polls    
+    polls[index]
+
+  getAll: ->
+    polls
 
   create: (name, pollOptions) ->
     polls.push new poll(name, pollOptions)
