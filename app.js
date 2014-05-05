@@ -8,10 +8,18 @@ var bodyParser = require('body-parser');
 var coffeescript = require('coffee-script/register');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var partials = require('./routes/partials');
+var polls = require('./routes/polls');
 
 var app = express();
+
+var db;
+
+require('./db').init(function(err, database){
+    if (err)
+        throw err;
+    db = database;
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,8 +35,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('connect-assets')());
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/partials', partials);
+app.use('/polls', polls);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
