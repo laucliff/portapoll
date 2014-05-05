@@ -1,1 +1,5 @@
 div {{holla}}
+div(ng-repeat='poll in polls')
+  a(href='#/polls/{{$index}}') {{$index+1}}: {{poll.name}}
+
+button(ng-click='createPoll()') New Poll

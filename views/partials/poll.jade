@@ -1,0 +1,5 @@
+div {{poll.name}}
+
+div(ng-repeat='option in poll.pollOptions')
+  {{option.name}}: {{option.votes}}
+  button(ng-click='vote($index)') Vote
