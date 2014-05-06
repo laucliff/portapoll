@@ -9,12 +9,12 @@ app.service 'pollService', ($http)->
 
       @pollOptions = []
 
-      @addPollOption option for option in pollOptions if pollOptions?
+      @addPollOption option for option in attributes.pollOptions if attributes?.pollOptions?
 
-    addPollOption: (name, votes) ->
+    addPollOption: (attributes = {}) ->
       @pollOptions.push
-        name: name || 'Poll Option'
-        votes: votes || 0
+        name: attributes.name || 'Poll Option'
+        votes: attributes.votes || 0
 
     vote: (index) ->
       if @pollOptions[index]?.votes?

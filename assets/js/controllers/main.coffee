@@ -30,9 +30,36 @@ mainController = ($scope, $location, pollService) ->
 
     pollService.destroy poll
 
-pollController = ($scope, $routeParams, pollService) ->
+pollController = ($scope, $routeParams, $cookieStore, pollService) ->
 
   $scope.poll = pollService.at $routeParams.pollId
 
   $scope.vote = (index) ->
     $scope.poll.vote(index)
+
+    pollsVoted = $cookieStore.get 'pollsVoted'
+
+    pollsVoted = [] if not pollsVoted?
+
+    # Ensure unique keys
+    if pollsVoted.indexOf($scope.poll._id) == -1
+      pollsVoted.push $scope.poll._id
+      $cookieStore.put 'pollsVoted', pollsVoted    
+
+newPollController = ($scope, $location, pollService) ->
+
+  $scope.poll = 
+    name: 'New Poll'
+    pollOptions: []
+
+  $scope.addOption = ->
+    $scope.poll.pollOptions.push
+      name: 'New Option'
+
+  $scope.removeOption = (index) ->
+    $scope.poll.pollOptions.splice(index, 1)
+
+  $scope.savePoll = ->
+    pollService.create $scope.poll
+
+    $location.url '/'

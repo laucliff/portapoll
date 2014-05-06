@@ -1,1 +1,1 @@
-app = angular.module 'portapoll', ['ngRoute']
+app = angular.module 'portapoll', ['ngRoute', 'ngCookies']

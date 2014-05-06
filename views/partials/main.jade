@@ -3,4 +3,4 @@ div(ng-repeat='poll in polls')
   a(href='#/polls/{{$index}}') {{$index+1}}: {{poll.name}}
   button(ng-click='deletePoll($index)') Delete
 
-button(ng-click='createPoll()') New Poll
+a(href='#/polls/new') New Poll

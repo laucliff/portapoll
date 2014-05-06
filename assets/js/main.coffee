@@ -1,5 +1,6 @@
-#= require lib/angular/angular.js
-#= require lib/angular/angular-route.js
+#= require lib/angular/angular
+#= require lib/angular/angular-route
+#= require lib/angular/angular-cookies
 
 #= require app
 #= require router

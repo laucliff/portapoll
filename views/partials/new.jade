@@ -1,0 +1,14 @@
+div New Poll
+
+div Poll Name: 
+  input(type='text' ng-model='poll.name')
+
+div(ng-repeat='option in poll.pollOptions')
+  input(type='text' ng-model='option.name')
+  button(ng-click='removeOption($index)') X
+
+button(ng-click='addOption()') Add Option
+
+button(ng-click='savePoll()') Save
+
+a(href='/') Cancel
