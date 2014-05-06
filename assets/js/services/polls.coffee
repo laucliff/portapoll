@@ -1,8 +1,11 @@
 app.service 'pollService', ($http)->
 
   class poll
-    constructor: (name, pollOptions) ->
-      @name = name or 'New Poll'
+    constructor: (attributes, options) ->
+
+      @_id = attributes._id if attributes._id?
+
+      @name = attributes.name or 'New Poll'
 
       @pollOptions = []
 
@@ -25,7 +28,7 @@ app.service 'pollService', ($http)->
   $http.get('/polls').success (data) ->
     console.log 'get', data
 
-  get: (index)->
+  at: (index)->
     polls[index]
 
   getAll: ->
@@ -34,17 +37,37 @@ app.service 'pollService', ($http)->
   fetch: (callback) ->
     $http.get('/polls')
     .success (data) ->
-      polls = data
+      
+      newPolls = []
+      data.forEach (newPoll) ->
+        newPolls.push new poll newPoll
+
+      polls = newPolls
+
       callback null, polls
     .error (data) ->
       callback data
 
-  create: (name, pollOptions) ->
+  create: (attributes) ->
 
-    poll = new poll name, pollOptions
+    newPoll = new poll attributes
+      # name: name
+      # pollOptions: pollOptions
 
-    index = polls.push(poll)-1
-
-    $http.post('/polls', poll: poll).success (data) ->
+    $http.post('/polls', poll: newPoll).success (data) ->
       console.log 'create', data
-      polls[index]._id = data._id
+      newPoll._id = data._id
+
+    polls.push newPoll
+
+  destroy: (poll)->
+    if poll._id?
+      $http.delete("/polls/#{poll._id}").success (data) ->
+        console.log 'delete', data
+
+        index = polls.indexOf(poll)
+
+        if index != -1
+          polls.splice(index, 1)
+      .error (abc) ->
+        console.log 'error', abc

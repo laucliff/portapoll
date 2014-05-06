@@ -46,14 +46,13 @@ router.post '/', (req, res) ->
 # Delete poll
 router.delete '/:id', (req, res) ->
   polls = mongo.db.collection('polls');
-  
-  polls.findOne
+
+  polls.remove
     _id: new BSON.ObjectID(req.params.id)
+  , null
   , (err, doc) ->
-
-    console.log err, doc
-
-    res.send doc
+    throw err if err
+    res.send 200
 
 
 

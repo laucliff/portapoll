@@ -5,10 +5,15 @@ mainController = ($scope, $location, pollService) ->
 
   # if pollService.getAll().length == 0
     # pollService.create 'new poll', ['option1', 'option2']
+    # pollService.create
+      # name: 'new poll'
+      # pollOptions: ['option1', 'option2']
 
   pollService.fetch (err, data) ->
+    console.log data
     if data.length == 0
-      pollService.create 'new poll', ['option1', 'option2']
+      1
+      # pollService.create 'new poll', ['option1', 'option2']
 
   console.log pollService.getAll()
 
@@ -20,9 +25,14 @@ mainController = ($scope, $location, pollService) ->
   $scope.createPoll = () ->
     pollService.create()
 
+  $scope.deletePoll = (index) ->
+    poll = pollService.at index
+
+    pollService.destroy poll
+
 pollController = ($scope, $routeParams, pollService) ->
 
-  $scope.poll = pollService.get $routeParams.pollId
+  $scope.poll = pollService.at $routeParams.pollId
 
   $scope.vote = (index) ->
     $scope.poll.vote(index)
