@@ -1,4 +1,4 @@
-app.service 'pollService', ()->
+app.service 'pollService', ($http)->
 
   class poll
     constructor: (name, pollOptions) ->
@@ -22,11 +22,29 @@ app.service 'pollService', ()->
 
   polls = []
 
+  $http.get('/polls').success (data) ->
+    console.log 'get', data
+
   get: (index)->
     polls[index]
 
   getAll: ->
     polls
 
+  fetch: (callback) ->
+    $http.get('/polls')
+    .success (data) ->
+      polls = data
+      callback null, polls
+    .error (data) ->
+      callback data
+
   create: (name, pollOptions) ->
-    polls.push new poll(name, pollOptions)
+
+    poll = new poll name, pollOptions
+
+    index = polls.push(poll)-1
+
+    $http.post('/polls', poll: poll).success (data) ->
+      console.log 'create', data
+      polls[index]._id = data._id

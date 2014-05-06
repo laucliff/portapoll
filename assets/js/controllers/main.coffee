@@ -3,8 +3,12 @@ mainController = ($scope, $location, pollService) ->
 
   console.log pollService, pollService.getAll()
 
-  if pollService.getAll().length == 0
-    pollService.create 'new poll', ['option1', 'option2']
+  # if pollService.getAll().length == 0
+    # pollService.create 'new poll', ['option1', 'option2']
+
+  pollService.fetch (err, data) ->
+    if data.length == 0
+      pollService.create 'new poll', ['option1', 'option2']
 
   console.log pollService.getAll()
 

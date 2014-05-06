@@ -13,14 +13,6 @@ var polls = require('./routes/polls');
 
 var app = express();
 
-var db;
-
-require('./db').init(function(err, database){
-    if (err)
-        throw err;
-    db = database;
-});
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
