@@ -35,7 +35,7 @@ pollController = ($scope, $routeParams, $cookieStore, pollService) ->
   $scope.poll = pollService.at $routeParams.pollId
 
   $scope.vote = (index) ->
-    $scope.poll.vote(index)
+    pollService.vote $scope.poll, index
 
     pollsVoted = $cookieStore.get 'pollsVoted'
 

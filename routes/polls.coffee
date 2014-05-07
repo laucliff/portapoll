@@ -30,6 +30,28 @@ router.get '/:id', (req, res) ->
 # User has voted on given poll
 router.post '/:id/vote/:optionId', (req, res) ->
 
+  polls = mongo.db.collection('polls')
+  id = new BSON.ObjectID(req.params.id)
+  optionIndex = req.params.optionId
+
+  # Clunky way of building object string based on index.
+  # May want to transition to basing on option id?
+  updateObj =
+    $inc: {}
+  updateObj.$inc["pollOptions.#{optionIndex}.votes"] = 1
+
+  polls.update
+    _id: id
+  ,
+    updateObj
+
+  polls.update
+    _id: id
+  , (err, doc) ->
+    throw err if err
+    console.log 'voted', err, doc
+    res.send 200
+
 # Create new poll
 router.post '/', (req, res) ->
   polls = mongo.db.collection('polls')

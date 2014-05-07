@@ -19,6 +19,7 @@ app.service 'pollService', ($http)->
     vote: (index) ->
       if @pollOptions[index]?.votes?
         @pollOptions[index].votes++
+      else @pollOptions[index].votes = 1
 
     serialize: ->
       JSON.stringify this
@@ -71,3 +72,9 @@ app.service 'pollService', ($http)->
           polls.splice(index, 1)
       .error (abc) ->
         console.log 'error', abc
+
+  vote: (poll, optionIndex) ->
+    poll.vote(optionIndex)
+
+    $http.post("/polls/#{poll._id}/vote/#{optionIndex}").success (data) ->
+      console.log 'voted', poll._id, optionIndex, data
