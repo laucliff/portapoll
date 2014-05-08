@@ -44,9 +44,6 @@ router.post '/:id/vote/:optionId', (req, res) ->
     _id: id
   ,
     updateObj
-
-  polls.update
-    _id: id
   , (err, doc) ->
     throw err if err
     console.log 'voted', err, doc

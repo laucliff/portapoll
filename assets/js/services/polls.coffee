@@ -4,9 +4,6 @@ app.factory 'Poll', ($resource) ->
   , vote:
     method: 'POST'
     url: "/polls/:pollId/vote/:optionId"
-  , destroy:
-    method: 'DELETE'
-    url: "/polls/:pollId"
 
   resource
 
@@ -17,11 +14,31 @@ app.factory 'Polls', (Poll) ->
   Poll.query (data) ->
     polls = data
 
+# Attempt to get from locally stored polls. Otherwise fetch from server if not found.
+  get: (id, callback) ->
+    poll = _.find polls, _id: id
+
+    if not poll?
+      Poll.get id: id, (data) ->
+        callback data
+    else
+      callback poll
+
   getAll: ->
     polls
 
   at: (index) ->
     poll = polls[index]
+
+  vote: (poll, index) ->
+    poll.pollOptions[index].votes++
+
+    # Create a new poll object before voting.
+    # Once a resource resolves, it clears itself, making it an unreliable data object.
+    # May want to revert to homebrew method if such is the case.
+    (new Poll poll).$vote
+      pollId: poll._id
+      optionId: index
 
   fetch: (args...)->
     promise = Poll.query args...
@@ -44,7 +61,8 @@ app.factory 'Polls', (Poll) ->
     polls.push poll
 
   destroy: (poll) ->
-    Poll.delete id: poll._id, (res) ->
+    # See comment under vote for reason behind creating a new poll.
+    (new Poll poll).$delete id: poll._id, (res) ->
       polls = _.without polls, poll
 
 # app.service 'pollService', ($http)->
