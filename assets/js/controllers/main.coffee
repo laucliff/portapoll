@@ -10,28 +10,27 @@ mainController = ($scope, $location, Polls) ->
     true
 
 pollController = ($scope, $routeParams, $cookieStore, Polls) ->
-  # $scope.poll = Polls.at $routeParams.pollId
-  # $scope.poll = pollService.at $routeParams.pollId
-
-  # $scope.poll = Polls.get $routeParams.pollId
 
   Polls.get $routeParams.pollId, (poll) ->
-    console.log poll
     $scope.poll = poll
 
+    pollsVoted = $cookieStore.get 'pollsVoted'
+    $scope.hasVoted = _.contains pollsVoted, poll._id
+
+
   $scope.vote = (index) ->
-    Polls.vote $scope.poll, index
 
+    if $scope.hasVoted
+      console.log 'Already voted!'
+      return
 
-    # pollService.vote $scope.poll, index
+    pollsVoted = $cookieStore.get('pollsVoted') or []
 
-    # pollsVoted = $cookieStore.get 'pollsVoted'
-  #   pollsVoted = [] if not pollsVoted?
+    pollsVoted.push $scope.poll._id
+    $cookieStore.put 'pollsVoted', pollsVoted
 
-  #   # Ensure unique keys
-  #   if pollsVoted.indexOf($scope.poll._id) == -1
-  #     pollsVoted.push $scope.poll._id
-  #     $cookieStore.put 'pollsVoted', pollsVoted    
+    $scope.hasVoted = true
+
 
 newPollController = ($scope, $location, Polls) ->
 

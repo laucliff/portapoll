@@ -1,5 +1,7 @@
 div {{poll.name}} {{poll._id}}
 
+div(ng-show='hasVoted') This guy has already voted.
+
 div(ng-repeat='option in poll.pollOptions')
   {{option.name}}: {{option.votes}}
   button(ng-click='vote($index)') Vote
