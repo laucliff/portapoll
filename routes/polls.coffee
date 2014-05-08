@@ -56,7 +56,7 @@ router.post '/:id/vote/:optionId', (req, res) ->
 router.post '/', (req, res) ->
   polls = mongo.db.collection('polls')
 
-  newPoll = req.body.poll
+  newPoll = req.body
 
   polls.insert newPoll, null, (err, doc)->
     throw err if err

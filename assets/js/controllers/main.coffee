@@ -1,65 +1,47 @@
-mainController = ($scope, $location, pollService) ->
+mainController = ($scope, $location, Polls) ->
   $scope.holla = 'dolla bill yaaaaallll'
 
-  console.log pollService, pollService.getAll()
+  $scope.deletePoll = (poll) ->
+    Polls.destroy poll
 
-  # if pollService.getAll().length == 0
-    # pollService.create 'new poll', ['option1', 'option2']
-    # pollService.create
-      # name: 'new poll'
-      # pollOptions: ['option1', 'option2']
-
-  pollService.fetch (err, data) ->
-    console.log data
-    if data.length == 0
-      1
-      # pollService.create 'new poll', ['option1', 'option2']
-
-  console.log pollService.getAll()
-
-  $scope.$watch pollService.getAll, (polls) ->
+  $scope.$watch Polls.getAll, (polls) ->
     $scope.polls = polls
   ,
     true
 
-  $scope.createPoll = () ->
-    pollService.create()
+pollController = ($scope, $routeParams, $cookieStore, Polls) ->
+  $scope.poll = Polls.at $routeParams.pollId
+  # $scope.poll = pollService.at $routeParams.pollId
 
-  $scope.deletePoll = (index) ->
-    poll = pollService.at index
+  # $scope.vote = (index) ->
+  #   pollService.vote $scope.poll, index
 
-    pollService.destroy poll
+  #   pollsVoted = $cookieStore.get 'pollsVoted'
 
-pollController = ($scope, $routeParams, $cookieStore, pollService) ->
+  #   pollsVoted = [] if not pollsVoted?
 
-  $scope.poll = pollService.at $routeParams.pollId
+  #   # Ensure unique keys
+  #   if pollsVoted.indexOf($scope.poll._id) == -1
+  #     pollsVoted.push $scope.poll._id
+  #     $cookieStore.put 'pollsVoted', pollsVoted    
 
-  $scope.vote = (index) ->
-    pollService.vote $scope.poll, index
+newPollController = ($scope, $location, pollService, Polls) ->
 
-    pollsVoted = $cookieStore.get 'pollsVoted'
-
-    pollsVoted = [] if not pollsVoted?
-
-    # Ensure unique keys
-    if pollsVoted.indexOf($scope.poll._id) == -1
-      pollsVoted.push $scope.poll._id
-      $cookieStore.put 'pollsVoted', pollsVoted    
-
-newPollController = ($scope, $location, pollService) ->
-
-  $scope.poll = 
+  $scope.poll =
     name: 'New Poll'
     pollOptions: []
 
   $scope.addOption = ->
     $scope.poll.pollOptions.push
       name: 'New Option'
+      votes: 0
 
   $scope.removeOption = (index) ->
     $scope.poll.pollOptions.splice(index, 1)
 
   $scope.savePoll = ->
-    pollService.create $scope.poll
+
+    Polls.create $scope.poll, (response) ->
+      console.log response
 
     $location.url '/'

@@ -1,4 +1,4 @@
-div {{poll.name}}
+div {{poll.name}} {{poll._id}}
 
 div(ng-repeat='option in poll.pollOptions')
   {{option.name}}: {{option.votes}}
