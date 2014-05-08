@@ -49,7 +49,5 @@ newPollController = ($scope, $location, Polls) ->
 
   $scope.savePoll = ->
 
-    Polls.create $scope.poll, (response) ->
-      console.log response
-
-    $location.url '/'
+    Polls.create $scope.poll, (newPoll) ->
+      $location.url "/polls/#{newPoll._id}"
