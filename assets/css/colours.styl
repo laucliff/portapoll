@@ -1,0 +1,31 @@
+evenColours = {
+  vote: {
+    base: blue
+    hover: darkblue
+    active: navy
+  }
+}
+
+oddColours = {
+  base: lightgray
+  vote: {
+    base: gray
+    hover: lightgray
+    active: darkgray
+  }
+}
+
+buttonColour(colours)
+  background-color: colours.base
+  color: white
+
+  &:hover
+    background-color: colours.hover
+  &:active
+    background-color: colours.active
+
+stripe(colours)
+  if colours.base
+    background-color: colours.base
+  .button
+    buttonColour(colours.vote)

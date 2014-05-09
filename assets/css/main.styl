@@ -1,9 +1,11 @@
 //= require lib/bootstrap.min
 
+@import colours
+
 html, body
   height: 100%
 
-border-radius = 15px
+border-radius = 5px
 
 .container
   background-color: lightblue
@@ -23,10 +25,13 @@ a.button
   text-align: center
 
 .header
-  padding: border-radius
+  padding: 15px
+
+.body
+  padding: 15px
 
 .footer
-  padding: border-radius
+  padding: 15px
 
   .button
     color: white
@@ -39,37 +44,6 @@ a.button
   .button:nth-child(odd)
     background-color: salmon
 
-evenColours = {
-  vote: {
-    base: blue
-    hover: darkblue
-    active: navy
-  }
-}
-
-oddColours = {
-  base: lightgray
-  vote: {
-    base: gray
-    hover: lightgray
-    active: darkgray
-  }
-}
-
-buttonColour(colours)
-  background-color: colours.base
-  color: white
-
-  &:hover
-    background-color: colours.hover
-  &:active
-    background-color: colours.active
-
-stripe(colours)
-  if colours.base
-    background-color: colours.base
-  .button
-    buttonColour(colours.vote)
 
 .option
   &:nth-child(even)
@@ -81,6 +55,12 @@ stripe(colours)
 .option
   font-size: 25px
 
+  input[type="text"]
+    background: transparent
+    border: none
+
 input[type="text"].title
   font-size: 25px
   width: 100%
+  background: transparent
+  border: none
