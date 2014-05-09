@@ -1,0 +1,11 @@
+h2(class='title') {{poll.name}} {{poll._id}}
+
+div(ng-show='hasVoted') This guy has already voted.
+
+div(ng-repeat='option in poll.pollOptions' class='option row')
+  div(class='col-md-10 detail')
+    {{$index+1}}: {{option.name}}
+  div(class='col-md-2 votes')
+    {{option.votes}}
+
+a(href='/') All Polls

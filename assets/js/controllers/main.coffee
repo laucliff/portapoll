@@ -31,6 +31,10 @@ pollController = ($scope, $routeParams, $cookieStore, Polls) ->
 
     $scope.hasVoted = true
 
+resultsController = ($scope, $routeParams, Polls) ->
+
+  Polls.get $routeParams.pollId, (poll) ->
+    $scope.poll = poll
 
 newPollController = ($scope, $location, Polls) ->
 

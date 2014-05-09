@@ -6,6 +6,9 @@ app.config ($routeProvider) ->
     .when '/polls/new',
       templateUrl: 'partials/new'
       controller: 'newPollController'
+    .when '/polls/:pollId/results',
+      templateUrl: 'partials/results'
+      controller: 'resultsController'
     .when '/polls/:pollId',
       templateUrl: 'partials/poll'
       controller: 'pollController'
