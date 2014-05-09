@@ -1,14 +1,15 @@
-div New Poll
+div(class='row header')
+  input(type='text' class='title' ng-model='poll.name')
 
-div Poll Name: 
-  input(type='text' ng-model='poll.name')
+div(class='body')
+  div(class='options')
+    div(class='option row' ng-repeat='option in poll.pollOptions')
+      input(type='text' class='col-md-11' ng-model='option.name')
+      a(href='' class='col-md-1 button' ng-click='removeOption($index)') X
 
-div(ng-repeat='option in poll.pollOptions')
-  input(type='text' ng-model='option.name')
-  button(ng-click='removeOption($index)') X
+div(class='footer row')
+  a(href='' class='button' ng-click='addOption()') Add Option
 
-button(ng-click='addOption()') Add Option
+  a(href='' class='button' ng-click='savePoll()') Save
 
-button(ng-click='savePoll()') Save
-
-a(href='/') Cancel
+  a(href='/' class='button') Cancel

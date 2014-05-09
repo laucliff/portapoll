@@ -3,9 +3,11 @@
 html, body
   height: 100%
 
+border-radius = 15px
+
 .container
   background-color: lightblue
-  border-radius: 15px
+  border-radius: border-radius
 
 [class*="col-"]
   padding-left: 20px
@@ -13,12 +15,29 @@ html, body
   padding-top: 15px
   padding-bottom: 15px
 
-// .row:nth-child(odd)
-//   background-color: lightgray
-
+a.button
+  text-align: center
+  text-decoration: none
 
 .title
   text-align: center
+
+.header
+  padding: border-radius
+
+.footer
+  padding: border-radius
+
+  .button
+    color: white
+    background-color: gray
+    border-radius: border-radius
+    font-size: 20px
+    padding: 10px 10px
+    margin: 0 15px
+
+  .button:nth-child(odd)
+    background-color: salmon
 
 evenColours = {
   vote: {
@@ -37,17 +56,20 @@ oddColours = {
   }
 }
 
+buttonColour(colours)
+  background-color: colours.base
+  color: white
+
+  &:hover
+    background-color: colours.hover
+  &:active
+    background-color: colours.active
+
 stripe(colours)
   if colours.base
     background-color: colours.base
-  .vote
-    background-color: colours.vote.base
-    color: white
-
-    &:hover
-      background-color: colours.vote.hover
-    &:active
-      background-color: colours.vote.active
+  .button
+    buttonColour(colours.vote)
 
 .option
   &:nth-child(even)
@@ -59,6 +81,6 @@ stripe(colours)
 .option
   font-size: 25px
 
-  .vote
-    text-align: center
-    text-decoration: none
+input[type="text"].title
+  font-size: 25px
+  width: 100%
