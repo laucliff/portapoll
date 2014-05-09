@@ -2,3 +2,63 @@
 
 html, body
   height: 100%
+
+.container
+  background-color: lightblue
+  border-radius: 15px
+
+[class*="col-"]
+  padding-left: 20px
+  padding-right: 20px
+  padding-top: 15px
+  padding-bottom: 15px
+
+// .row:nth-child(odd)
+//   background-color: lightgray
+
+
+.title
+  text-align: center
+
+evenColours = {
+  vote: {
+    base: blue
+    hover: darkblue
+    active: navy
+  }
+}
+
+oddColours = {
+  base: lightgray
+  vote: {
+    base: gray
+    hover: lightgray
+    active: darkgray
+  }
+}
+
+stripe(colours)
+  if colours.base
+    background-color: colours.base
+  .vote
+    background-color: colours.vote.base
+    color: white
+
+    &:hover
+      background-color: colours.vote.hover
+    &:active
+      background-color: colours.vote.active
+
+.option
+  &:nth-child(even)
+    stripe(evenColours)
+
+  &:nth-child(odd)
+    stripe(oddColours)
+
+.option
+  font-size: 25px
+
+  .vote
+    text-align: center
+    text-decoration: none

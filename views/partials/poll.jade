@@ -1,9 +1,11 @@
-div {{poll.name}} {{poll._id}}
+h2(class='title') {{poll.name}} {{poll._id}}
 
 div(ng-show='hasVoted') This guy has already voted.
 
-div(ng-repeat='option in poll.pollOptions')
-  {{option.name}}: {{option.votes}}
-  button(ng-click='vote($index)') Vote
+div(ng-repeat='option in poll.pollOptions' class='option row')
+  div(class='col-md-10 detail')
+    {{$index+1}}: {{option.name}} {{option.votes}}
+  a(href='' class='col-md-2 vote' ng-click='vote($index)') vote
+    //- button(ng-click='vote($index)') Vote
 
 a(href='/') All Polls

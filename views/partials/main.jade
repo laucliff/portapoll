@@ -1,6 +1,9 @@
 div {{holla}}
-div(ng-repeat='poll in polls')
-  a(href='#/polls/{{poll._id}}') {{$index+1}}: {{poll.name}} {{poll._id}}
-  button(ng-click='deletePoll(poll)') Delete
+div(class='polls')
+  div(ng-repeat='poll in polls' class='poll row')
+    div(class='col-md-10')
+      a(href='#/polls/{{poll._id}}') {{$index+1}}: {{poll.name}} {{poll._id}}
+    div(class='col-md-2')   
+      button(ng-click='deletePoll(poll)') Delete
 
 a(href='#/polls/new') New Poll
