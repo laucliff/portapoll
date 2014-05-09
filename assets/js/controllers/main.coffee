@@ -9,7 +9,7 @@ mainController = ($scope, $location, Polls) ->
   ,
     true
 
-pollController = ($scope, $routeParams, $cookieStore, Polls) ->
+pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
 
   Polls.get $routeParams.pollId, (poll) ->
     $scope.poll = poll
@@ -22,14 +22,18 @@ pollController = ($scope, $routeParams, $cookieStore, Polls) ->
 
     if $scope.hasVoted
       console.log 'Already voted!'
-      return
+    else
 
-    pollsVoted = $cookieStore.get('pollsVoted') or []
+      Polls.vote $scope.poll, index
 
-    pollsVoted.push $scope.poll._id
-    $cookieStore.put 'pollsVoted', pollsVoted
+      pollsVoted = $cookieStore.get('pollsVoted') or []
 
-    $scope.hasVoted = true
+      pollsVoted.push $scope.poll._id
+      $cookieStore.put 'pollsVoted', pollsVoted
+
+      $scope.hasVoted = true
+
+    $location.url "/polls/#{$routeParams.pollId}/results"
 
 resultsController = ($scope, $routeParams, Polls) ->
 
@@ -54,3 +58,5 @@ newPollController = ($scope, $location, Polls) ->
 
     Polls.create $scope.poll, (newPoll) ->
       $location.url "/polls/#{newPoll._id}"
+
+  $scope.addOption()
