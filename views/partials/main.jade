@@ -3,10 +3,8 @@ div(class='row header') {{holla}}
 div(class='row body')
   div(class='polls')
     div(ng-repeat='poll in polls' class='poll row')
-      div(class='col-md-10')
-        a(href='#/polls/{{poll._id}}') {{$index+1}}: {{poll.name}} {{poll._id}}
-      div(class='col-md-2')   
-        a(href='' class='button' ng-click='deletePoll(poll)') Delete
+      a(href='#/polls/{{poll._id}}' class='col-md-10 info') {{$index+1}}: {{poll.name}} {{poll._id}}
+      a(href='' class='col-md-2 button' ng-click='deletePoll(poll)') Delete
 
 div(class='row footer')
   a(href='#/polls/new' class='button') New Poll

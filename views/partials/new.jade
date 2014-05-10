@@ -4,7 +4,7 @@ div(class='row header')
 div(class='body')
   div(class='options')
     div(class='option row' ng-repeat='option in poll.pollOptions')
-      input(type='text' class='col-md-11' ng-model='option.name')
+      input(type='text' class='col-md-11 info' ng-model='option.name')
       a(href='' class='col-md-1 button' ng-click='removeOption($index)') X
 
 div(class='footer row')
