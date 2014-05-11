@@ -2,6 +2,8 @@
 var debug = require('debug')('my-application');
 var app = require('../app');
 
+var pubsub = require('../pubsub');
+
 app.set('port', process.env.PORT || 3000);
 
 require('../db').init(function(err, db){
@@ -10,9 +12,10 @@ require('../db').init(function(err, db){
 
   console.log('Database connected.');
 
-
   var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
   });
+
+  pubsub.init();
 
 });

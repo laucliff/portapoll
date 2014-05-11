@@ -1,3 +1,5 @@
+#= require /pubsub
+
 app.factory 'Poll', ($resource) ->
   resource = $resource '/polls/:id'
   , null
@@ -7,12 +9,23 @@ app.factory 'Poll', ($resource) ->
 
   resource
 
-app.factory 'Polls', (Poll) ->
+app.service 'Polls', ($rootScope, Poll, pubsub) ->
 
   polls = []
 
   Poll.query (data) ->
-    polls = data
+    angular.copy data, polls
+
+  client = pubsub
+  client.subscribe '/polls', (response) ->
+    console.log 'faye', response
+    if response.message == 'new'
+      if not _.find(polls, response.data)
+        console.log "Inserting #{response.data._id} into polls."
+        polls.push response.data
+
+        # We need to trigger digest to update any views watching polls.
+        $rootScope.$digest()
 
 # Attempt to get from locally stored polls. Otherwise fetch from server if not found.
   get: (id, callback) ->
@@ -58,7 +71,7 @@ app.factory 'Polls', (Poll) ->
     poll.$save (response) ->
       callback response
 
-    polls.push poll
+    # polls.push poll
 
   destroy: (poll) ->
     # See comment under vote for reason behind creating a new poll.

@@ -1,4 +1,6 @@
+#= require lib/faye-browser
 #= require lib/lodash
+
 #= require lib/angular/angular
 #= require lib/angular/angular-route
 #= require lib/angular/angular-cookies

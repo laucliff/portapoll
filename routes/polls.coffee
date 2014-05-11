@@ -4,6 +4,8 @@ router = express.Router()
 mongo = require('../db')
 BSON = require('mongodb').BSONPure
 
+pubsub = require '../pubsub'
+
 # Get all polls
 router.get '/', (req, res) ->
 
@@ -61,6 +63,9 @@ router.post '/', (req, res) ->
     # Singular insert, so expecting a single result doc.
     res.send doc?[0]
 
+    pubsub.bayeux.getClient().publish '/polls',
+      message: 'new'
+      data: doc?[0]
 
 # Delete poll
 router.delete '/:id', (req, res) ->
