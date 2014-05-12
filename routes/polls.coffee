@@ -78,7 +78,9 @@ router.delete '/:id', (req, res) ->
     throw err if err
     res.send 200
 
-
+    pubsub.bayeux.getClient().publish '/polls',
+      message: 'remove'
+      data: req.params.id
 
 
 module.exports = router

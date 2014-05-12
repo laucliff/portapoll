@@ -19,12 +19,18 @@ app.service 'Polls', ($rootScope, Poll, pubsub) ->
   client = pubsub
   client.subscribe '/polls', (response) ->
     console.log 'faye', response
-    if response.message == 'new'
-      if not _.find(polls, response.data)
-        console.log "Inserting #{response.data._id} into polls."
-        polls.push response.data
+    switch response.message
+      when 'new'
+        if not _.find(polls, response.data)
+          console.log "Inserting #{response.data._id} into polls."
+          polls.push response.data
 
-        # We need to trigger digest to update any views watching polls.
+          # We need to trigger digest to update any views watching polls.
+          $rootScope.$digest()
+      when 'remove'
+        console.log 'remove', response
+        _.remove polls, (poll) ->
+          poll._id == response.data
         $rootScope.$digest()
 
 # Attempt to get from locally stored polls. Otherwise fetch from server if not found.
