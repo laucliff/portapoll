@@ -11,12 +11,13 @@ mainController = ($scope, $location, Polls) ->
 
 pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
 
-  Polls.get $routeParams.pollId, (poll) ->
-    $scope.poll = poll
+  # Polls.get $routeParams.pollId, (poll) ->
+  #   $scope.poll = poll
 
-    pollsVoted = $cookieStore.get 'pollsVoted'
-    $scope.hasVoted = _.contains pollsVoted, poll._id
+  #   pollsVoted = $cookieStore.get 'pollsVoted'
+  #   $scope.hasVoted = _.contains pollsVoted, poll._id
 
+  $scope.poll = Polls.get $routeParams.pollId
 
   $scope.vote = (index) ->
 
@@ -33,12 +34,11 @@ pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
 
       $scope.hasVoted = true
 
-    $location.url "/polls/#{$routeParams.pollId}/results"
+      $location.url "/polls/#{$routeParams.pollId}/results"
 
 resultsController = ($scope, $routeParams, Polls) ->
 
-  Polls.get $routeParams.pollId, (poll) ->
-    $scope.poll = poll
+  $scope.poll = Polls.get $routeParams.pollId
 
 newPollController = ($scope, $location, Polls) ->
 

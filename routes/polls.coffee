@@ -51,6 +51,12 @@ router.post '/:id/vote/:optionId', (req, res) ->
     console.log 'voted', err, doc
     res.send 200
 
+    pubsub.bayeux.getClient().publish '/polls',
+      message: 'vote'
+      data: 
+        pollId: req.params.id
+        optionId: req.params.optionId
+
 # Create new poll
 router.post '/', (req, res) ->
   polls = mongo.db.collection('polls')

@@ -14,7 +14,27 @@ app.service 'Polls', ($rootScope, Poll, pubsub) ->
   polls = []
 
   Poll.query (data) ->
-    angular.copy data, polls
+    newPolls = []
+    angular.copy data, newPolls
+
+    # Find intersection of new polls and old polls
+
+    nonMatchingPolls = []
+
+    newPolls.forEach (poll) ->
+      matchingPoll = _.find polls, _id: poll._id
+      if matchingPoll
+        # Merge
+        # For now just have existing overwrite.
+      else
+        nonMatchingPolls.push poll
+
+    console.log polls, nonMatchingPolls
+
+    polls = polls.concat nonMatchingPolls
+
+    console.log polls
+
 
   client = pubsub
   client.subscribe '/polls', (response) ->
@@ -32,16 +52,23 @@ app.service 'Polls', ($rootScope, Poll, pubsub) ->
         _.remove polls, (poll) ->
           poll._id == response.data
         $rootScope.$digest()
+      when 'vote'
+        poll = _.find polls, _id: response.data.pollId
+        poll?.pollOptions[parseInt(response.data.optionId)]?.votes++
+        $rootScope.$digest()
 
 # Attempt to get from locally stored polls. Otherwise fetch from server if not found.
+# Returns either the poll itself or a promise object. The promise object is 
   get: (id, callback) ->
+
     poll = _.find polls, _id: id
 
     if not poll?
-      Poll.get id: id, (data) ->
-        callback data
-    else
-      callback poll
+      poll = Poll.get id: id
+
+      polls.push poll
+
+    poll
 
   getAll: ->
     polls
@@ -50,11 +77,9 @@ app.service 'Polls', ($rootScope, Poll, pubsub) ->
     poll = polls[index]
 
   vote: (poll, index) ->
-    poll.pollOptions[index].votes++
 
-    # Create a new poll object before voting.
-    # Once a resource resolves, it clears itself, making it an unreliable data object.
-    # May want to revert to homebrew method if such is the case.
+    # Currently relies on the vote callback to update vote count.
+
     (new Poll poll).$vote
       pollId: poll._id
       optionId: index
