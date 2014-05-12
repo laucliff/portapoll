@@ -19,6 +19,12 @@ pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
 
   $scope.poll = Polls.get $routeParams.pollId
 
+  pollsVoted = $cookieStore.get 'pollsVoted'
+
+  $scope.poll.$promise.then (poll) ->
+    if _.contains pollsVoted, poll._id
+      $location.url "/polls/#{$routeParams.pollId}/results"
+
   $scope.vote = (index) ->
 
     if $scope.hasVoted
