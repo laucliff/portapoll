@@ -4,11 +4,13 @@
 
 html, body
   height: 100%
+  background-color: #ecf0f1
 
 border-radius = 5px
 
 .container
-  background-color: lightblue
+  background-color: #86E2D5
+  // background-color: #86E2D5
   border-radius: border-radius
 
 [class*="col-"]
@@ -16,6 +18,12 @@ border-radius = 5px
   padding-right: 20px
   padding-top: 15px
   padding-bottom: 15px
+
+  &.buttons
+    padding-left: 10px
+    padding-right: 7px
+    padding-top: 7px
+    padding-bottom: 7px
 
 a.button
   text-align: center
@@ -41,25 +49,35 @@ a.button
     padding: 10px 10px
     margin: 0 15px
 
-  .button:nth-child(odd)
     background-color: salmon
+
+  // .button:nth-child(odd)
+  //   background-color: salmon
+
+ul
+  list-style-type: none
+  padding: 0
 
 .poll .info
   text-decoration:none
 
-.option, .poll
-  &:nth-child(even)
-    stripe(evenColours)
+li.item
+  stripe(oddColours)
 
-  &:nth-child(odd)
-    stripe(oddColours)
-
-.option
   font-size: 25px
+  margin-top: 10px
+  margin-bottom: 10px
+  border-radius: border-radius
 
   input[type="text"]
     background: transparent
     border: none
+
+  .button
+    display: block
+    border-radius: border-radius
+    padding-top: 8px
+    padding-bottom: 8px
 
 input[type="text"].title
   font-size: 25px

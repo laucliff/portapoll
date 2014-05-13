@@ -1,10 +1,11 @@
 div(class='row header') {{holla}}
 
-div(class='row body')
-  div(class='polls')
-    div(ng-repeat='poll in polls' class='poll row')
+div(class='body')
+  ul(class='polls')
+    li(ng-repeat='poll in polls' class='poll row item')
       a(href='#/polls/{{poll._id}}' class='col-md-10 info') {{$index+1}}: {{poll.name}} {{poll._id}}
-      a(href='' class='col-md-2 button' ng-click='deletePoll(poll)') Delete
+      div(class='col-md-2 buttons')
+        a(href='' class='button' ng-click='deletePoll(poll)') Delete
 
 div(class='row footer')
   a(href='#/polls/new' class='button') New Poll

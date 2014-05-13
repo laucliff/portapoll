@@ -4,8 +4,8 @@ div(class='row header')
 div(class='body')
   div(ng-show='hasVoted') This guy has already voted.
 
-  div(class='options')
-    div(ng-repeat='option in poll.pollOptions' class='option row')
+  ul(class='options')
+    li(ng-repeat='option in poll.pollOptions' class='option row item')
       div(class='col-md-10 info')
         {{$index+1}}: {{option.name}}
       div(class='col-md-2 votes')
