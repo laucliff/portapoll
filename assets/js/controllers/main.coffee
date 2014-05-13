@@ -11,11 +11,12 @@ mainController = ($scope, $location, Polls) ->
 
 pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
 
-  # Polls.get $routeParams.pollId, (poll) ->
-  #   $scope.poll = poll
+  redirectToResults = () ->
+    # Ensures that when the browser goes back, it does not end up in the vote screen.
+    $location.path "/polls/#{$routeParams.pollId}/results"
+    $location.replace()
 
-  #   pollsVoted = $cookieStore.get 'pollsVoted'
-  #   $scope.hasVoted = _.contains pollsVoted, poll._id
+    # $location.url "/polls/#{$routeParams.pollId}/results", true
 
   $scope.poll = Polls.get $routeParams.pollId
 
@@ -24,10 +25,11 @@ pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
   if $scope.poll.$promise
     $scope.poll.$promise.then (poll) ->
       if _.contains pollsVoted, poll._id
-        $location.url "/polls/#{$routeParams.pollId}/results"
+        redirectToResults()
   else
     if _.contains pollsVoted, $scope.poll._id
-        $location.url "/polls/#{$routeParams.pollId}/results"
+      redirectToResults()
+
 
   $scope.vote = (index) ->
 
@@ -44,7 +46,8 @@ pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
 
       $scope.hasVoted = true
 
-      $location.url "/polls/#{$routeParams.pollId}/results"
+      # $location.url "/polls/#{$routeParams.pollId}/results"
+      $redirectToResults()
 
 resultsController = ($scope, $routeParams, Polls) ->
 
