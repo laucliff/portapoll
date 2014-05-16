@@ -1,4 +1,4 @@
-mainController = ($scope, $location, Polls) ->
+mainController = ($scope, $location, Polls, admin) ->
   $scope.holla = 'dolla bill yaaaaallll'
 
   $scope.deletePoll = (poll) ->
@@ -8,6 +8,11 @@ mainController = ($scope, $location, Polls) ->
     $scope.polls = polls
   ,
     true
+
+  $scope.$watch admin.getToken, (token) ->
+    $scope.isLoggedIn = token?
+
+  admin.login()
 
 pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
 

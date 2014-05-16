@@ -6,7 +6,7 @@ div(class='body')
     li(ng-repeat='poll in polls' class='poll row item')
       a(href='#/polls/{{poll._id}}' class='col-md-10 info') {{$index+1}}: {{poll.name}} {{poll._id}}
       div(class='col-md-2 buttons')
-        a(href='' class='button' ng-click='deletePoll(poll)') Delete
+        a(href='' class='button' ng-click='deletePoll(poll)' ng-show='isLoggedIn') Delete
 
 div(class='row footer')
-  a(href='#/polls/new' class='button') New Poll
+  a(href='#/polls/new' class='button' ng-show='isLoggedIn') New Poll

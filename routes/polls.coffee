@@ -6,6 +6,9 @@ BSON = require('mongodb').BSONPure
 
 pubsub = require '../pubsub'
 
+expressJwt = require 'express-jwt'
+secret = 'secret'
+
 # Get all polls
 router.get '/', (req, res) ->
 
@@ -58,7 +61,12 @@ router.post '/:id/vote/:optionId', (req, res) ->
         optionId: req.params.optionId
 
 # Create new poll
-router.post '/', (req, res) ->
+router.post '/', expressJwt(secret: secret), (req, res) ->
+
+  if not (req.user.type == 'admin')
+    res.send 401, 'Not admin.'
+    return
+
   polls = mongo.db.collection('polls')
 
   newPoll = req.body
@@ -74,7 +82,11 @@ router.post '/', (req, res) ->
       data: doc?[0]
 
 # Delete poll
-router.delete '/:id', (req, res) ->
+router.delete '/:id', expressJwt(secret: secret), (req, res) ->
+  if not (req.user.type == 'admin')
+    res.send 401, 'Not admin.'
+    return
+
   polls = mongo.db.collection('polls');
 
   polls.remove

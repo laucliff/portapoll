@@ -9,7 +9,7 @@ app.factory 'Poll', ($resource) ->
 
   resource
 
-app.service 'Polls', ($rootScope, Poll, pubsub) ->
+app.service 'Polls', ($rootScope, Poll, pubsub, admin) ->
 
   polls = []
 
