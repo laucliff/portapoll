@@ -4,8 +4,11 @@ app.service 'admin', ($http, $window)->
     delete $window.sessionStorage.token
     console.log $window.sessionStorage
 
-    token = $http.post('/login').success (data) ->
+    token = $http.post('/login', password: password).success (data) ->
       $window.sessionStorage.token = data.token
+
+  logout: ->
+    delete $window.sessionStorage.token
 
   getToken: ->
     $window.sessionStorage.token

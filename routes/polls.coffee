@@ -7,7 +7,7 @@ BSON = require('mongodb').BSONPure
 pubsub = require '../pubsub'
 
 expressJwt = require 'express-jwt'
-secret = 'secret'
+secret = require('../auth').getTokenSecret()
 
 # Get all polls
 router.get '/', (req, res) ->
