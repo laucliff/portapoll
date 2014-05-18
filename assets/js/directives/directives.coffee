@@ -10,7 +10,6 @@ app.directive 'loginWindow', (admin)->
       $scope.isLoggedIn = token?
 
     $scope.login = ()->
-      console.log 'login'
       admin.login($scope.password)
         .error (err) ->
           $scope.error = err
@@ -19,3 +18,11 @@ app.directive 'loginWindow', (admin)->
 
     $scope.logout = () ->
       admin.logout()
+
+    $scope.toggleWindow = () ->
+      $scope.showBigWindow = !$scope.showBigWindow
+
+# Todo: some kind of modal or tooltip explaining that
+# the password is located in config/secrets.json under adminPassword
+    $scope.showPasswordHint = () ->
+      console.log 'password hint'

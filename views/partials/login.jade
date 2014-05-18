@@ -1,8 +1,11 @@
-div(class='login') admin
-  //- div(ng-hide='isLoggedIn')
-  div
-    div password
+div(class='login-module') 
+  a( href='' class='button small-window' ng-click='toggleWindow()') admin
+  div(class='big-window' ng-show='showBigWindow')
+    div(ng-hide='isLoggedIn')
+      div Password:
       input(type='password' ng-model='password')
-    a(href='' class='button' ng-hde='isLoggedIn' ng-click='login()') Log In
-  a(href='' class='button' ng-show='isLoggedIn' ng-click='logout()') Log Out
-  div(class='error' ng-show='error') {{error}}
+      a(href='' class='button login' ng-click='login()') Log In
+      div
+        a(href='' class='button password-info' ng-click='showPasswordHint()') What's my password?
+      div(class='error' ng-show='error') {{error}}
+    a(href='' class='button logout' ng-show='isLoggedIn' ng-click='logout()') Log Out
