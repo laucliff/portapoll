@@ -59,7 +59,27 @@ app.directive 'piechart', ()->
       data.votes
     ).sort(null)
 
+    # Radial displacement from given center.
+    # Expect tuples for center and coordinates inputs. [x,y]
+    dr = (center, point, displacement) ->
+
+      center = [0,0] if not center?
+
+      x = point[0] - center[0]
+      y = point[1] - center[1]
+
+      angle = Math.atan2(y, x)
+
+      newX = x + Math.cos(angle)*displacement
+      newY = y + Math.sin(angle)*displacement
+
+      [newX, newY]
+
     scope.render = (data) ->
+
+      totalVotes = 0
+      data.map (pollOption) ->
+        totalVotes += pollOption.votes
 
       pieChart = pie.selectAll('path').data(pieData(data))
 
@@ -81,23 +101,27 @@ app.directive 'piechart', ()->
 
       labelGroup.enter()
       .append('text')
-      .attr('transform', (d) ->
-        "translate(#{arc.centroid(d)})"
-      )
+      # .attr('transform', (d) ->
+        # "translate(#{arc.centroid(d)})"
+      # )
       .attr('font-size', '20')
       .attr('text-anchor', 'middle')
-      .text((d) -> d.data.name)
+      .text((d) -> "#{d.data.name}: #{d.value}")
       .each((d) -> this._current = d)
 
       labelGroup.transition()
       .attrTween 'transform', (d) ->
+
         interpolate = d3.interpolate this._current, d
         this._current = interpolate(0)
         (t) ->
-          "translate(#{arc.centroid(interpolate(t))})"
+          iPos = dr null, arc.centroid(interpolate(t)), r/4*1.5
+          "translate(#{iPos})"
+          # "translate(#{arc.centroid(interpolate(t))})"
       # Hide label if poll option does not take up space on the pie chart (zero votes).
       .attr 'opacity', (d) ->
         if d.value == 0 then 0 else 1
+      .text((d) -> "#{d.data.name}: #{d.value}")
 
 
     scope.$watch 'data', (poll) ->
