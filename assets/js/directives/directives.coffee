@@ -35,8 +35,10 @@ app.directive 'piechart', ()->
 
     colour = d3.scale.category20()
     
+    viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+
     width = el[0].offsetWidth
-    height = width
+    height = Math.min(width, viewportHeight)
     # height = el[0].offsetHeight
     r = Math.min(width, height)/2
 
@@ -115,9 +117,8 @@ app.directive 'piechart', ()->
         interpolate = d3.interpolate this._current, d
         this._current = interpolate(0)
         (t) ->
-          iPos = dr null, arc.centroid(interpolate(t)), r/4*1.5
+          iPos = dr null, arc.centroid(interpolate(t)), r/4*1.75
           "translate(#{iPos})"
-          # "translate(#{arc.centroid(interpolate(t))})"
       # Hide label if poll option does not take up space on the pie chart (zero votes).
       .attr 'opacity', (d) ->
         if d.value == 0 then 0 else 1

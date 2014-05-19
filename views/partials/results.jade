@@ -2,16 +2,15 @@ div(class='row header')
   h2(class='title') {{poll.name}} {{poll._id}}
 
 div(class='body')
-  div(ng-show='hasVoted') This guy has already voted.
+
+  div(piechart class='piechart row' data='poll')
 
   ul(class='options')
     li(ng-repeat='option in poll.pollOptions' class='option row item' ng-click='incr(option)')
       div(class='col-md-10 info')
-        {{$index+1}}: {{option.name}}
+        {{option.name}}
       div(class='col-md-2 votes')
         {{option.votes}}
-
-  div(piechart class='piechart' data='poll')
 
 div(class='row footer')
   a(href='/' class='button') All Polls
