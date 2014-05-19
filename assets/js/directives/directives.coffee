@@ -64,13 +64,9 @@ app.directive 'piechart', ()->
       pieChart = pie.selectAll('path').data(pieData(data))
 
       pieChart.enter().append('path')
-      .attr('fill', (d, i) ->
-        colour i
-      )
+      .attr('fill', (d, i) -> colour i)
       .attr('d', arc)
-      .each( (d) ->
-        this._current = d
-      )
+      .each((d) -> this._current = d )
 
 
       pieChart.transition()
@@ -88,21 +84,21 @@ app.directive 'piechart', ()->
       .attr('transform', (d) ->
         "translate(#{arc.centroid(d)})"
       )
-      .text((d)->
-        d.data.name
-      )
-      .each( (d) ->
-        this._current = d
-      )
+      .attr('font-size', '20')
+      .attr('text-anchor', 'middle')
+      .text((d) -> d.data.name)
+      .each((d) -> this._current = d)
 
       labelGroup.transition()
       .attrTween 'transform', (d) ->
-        console.log d
         interpolate = d3.interpolate this._current, d
         this._current = interpolate(0)
         (t) ->
-          # console.log arc.centroid(interpolate(t))
           "translate(#{arc.centroid(interpolate(t))})"
+      # Hide label if poll option does not take up space on the pie chart (zero votes).
+      .attr 'opacity', (d) ->
+        if d.value == 0 then 0 else 1
+
 
     scope.$watch 'data', (poll) ->
       scope.render poll.pollOptions if poll?.pollOptions?
