@@ -49,11 +49,14 @@ pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
       $scope.hasVoted = true
 
       # $location.url "/polls/#{$routeParams.pollId}/results"
-      $redirectToResults()
+      redirectToResults()
 
 resultsController = ($scope, $routeParams, Polls) ->
 
   $scope.poll = Polls.get $routeParams.pollId
+
+  $scope.incr = (option) ->
+    option.votes++
 
 newPollController = ($scope, $location, Polls) ->
 

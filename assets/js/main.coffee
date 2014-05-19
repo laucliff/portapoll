@@ -1,5 +1,6 @@
 #= require lib/faye-browser
 #= require lib/lodash
+#= require lib/d3
 
 #= require lib/angular/angular
 #= require lib/angular/angular-route
