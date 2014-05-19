@@ -73,7 +73,6 @@ app.directive 'piechart', ()->
       )
 
 
-
       pieChart.transition()
       .attrTween 'd', (d) ->
         interpolate = d3.interpolate this._current, d
@@ -83,7 +82,8 @@ app.directive 'piechart', ()->
 
 
       labelGroup = labels.selectAll('text').data(pieData(data))
-      .enter()
+
+      labelGroup.enter()
       .append('text')
       .attr('transform', (d) ->
         "translate(#{arc.centroid(d)})"
