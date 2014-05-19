@@ -7,9 +7,9 @@ div(class='body')
 
   ul(class='options')
     li(ng-repeat='option in poll.pollOptions' class='option row item' ng-click='incr(option)')
-      div(class='col-md-10 info')
+      div(class='col-xs-10 info')
         {{option.name}}
-      div(class='col-md-2 votes')
+      div(class='col-xs-2 votes')
         {{option.votes}}
 
 div(class='row footer')
