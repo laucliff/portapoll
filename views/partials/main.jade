@@ -5,9 +5,9 @@ div(class='row header')
 div(class='body')
   ul(class='polls')
     li(ng-repeat='poll in polls' class='poll row item')
-      a(href='#/polls/{{poll._id}}' class='col-sm-10 info') {{$index+1}}: {{poll.name}} {{poll._id}}
-      div(class='col-sm-2 buttons')
-        a(href='' class='button' ng-click='deletePoll(poll)' ng-show='isLoggedIn') Delete
+      a(href='#/polls/{{poll._id}}' class='col-sm-10 info') {{$index+1}}: {{poll.name}}
+      div(class='col-sm-2 buttons' ng-show='isLoggedIn')
+        a(href='' class='button' ng-click='deletePoll(poll)') Delete
 
 div(class='row footer')
-  a(href='#/polls/new' class='button' ng-show='isLoggedIn') New Poll
+  a(href='#/polls/new' class='col-md-2 button' ng-show='isLoggedIn') New Poll
