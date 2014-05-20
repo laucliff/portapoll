@@ -18,8 +18,6 @@ pollController = ($scope, $routeParams, $cookieStore, $location, Polls) ->
     $location.path "/polls/#{$routeParams.pollId}/results"
     $location.replace()
 
-    # $location.url "/polls/#{$routeParams.pollId}/results", true
-
   $scope.poll = Polls.get $routeParams.pollId
 
   pollsVoted = $cookieStore.get 'pollsVoted'
