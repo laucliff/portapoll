@@ -25,8 +25,13 @@ app.directive 'loginWindow', (admin)->
 
 # Todo: some kind of modal or tooltip explaining that
 # the password is located in config/secrets.json under adminPassword
+# For now, use an alert.
     $scope.showPasswordHint = () ->
       console.log 'password hint'
+      alert """
+      For demonstration purposes, the password is 'password'.
+      The actual password is stored in the adminPassword field under 'config/secrets.json'.
+      """
 
 app.directive 'piechart', ()->
   scope:
