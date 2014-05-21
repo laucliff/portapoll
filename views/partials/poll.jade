@@ -4,8 +4,7 @@ div(class='row header')
 div(class='body')
   ul(class='options')
     li(ng-repeat='option in poll.pollOptions' class='option row item')
-      div(class='col-md-10 info')
-        {{option.name}}
+      div(class='col-md-10 info') {{option.name}}
       div(class='col-md-2 buttons')
         a(href='' class='vote button' ng-click='vote($index)') vote
 
