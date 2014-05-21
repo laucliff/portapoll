@@ -56,7 +56,7 @@ resultsController = ($scope, $routeParams, Polls) ->
   $scope.incr = (option) ->
     option.votes++
 
-newPollController = ($scope, $location, Polls) ->
+newPollController = ($scope, $location, Polls, admin) ->
 
   $scope.poll =
     name: 'New Poll'
@@ -76,3 +76,6 @@ newPollController = ($scope, $location, Polls) ->
       $location.url "/polls/#{newPoll._id}"
 
   $scope.addOption()
+
+  $scope.$watch admin.getToken, (token) ->
+    $scope.isLoggedIn = token?

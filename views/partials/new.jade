@@ -1,16 +1,17 @@
 div(class='row header')
   input(type='text' class='title' ng-model='poll.name' get-focus)
+  div(login-window class='login-container')
 
 div(class='body')
   ul(class='options')
     li(class='option row item' ng-repeat='option in poll.pollOptions')
       input(type='text' class='col-sm-11 col-xs-10 info' ng-model='option.name')
       div(class='col-sm-1 col-xs-2 buttons')
-        a(href='' class='button' ng-click='removeOption($index)') X
+        a(href='' class='button' ng-click='removeOption($index)' ng-show='isLoggedIn') X
 
 div(class='footer row')
-  a(href='' class='col-xs-12 col-md-2 button' ng-click='addOption()') Add Option
+  a(href='' class='col-xs-12 col-md-2 button' ng-click='addOption()' ng-show='isLoggedIn') Add Option
 
-  a(href='' class='col-xs-12 col-md-2 button' ng-click='savePoll()') Save
+  a(href='' class='col-xs-12 col-md-2 button' ng-click='savePoll()' ng-show='isLoggedIn') Save
 
   a(href='/' class='col-xs-12 col-md-2 button') Cancel
