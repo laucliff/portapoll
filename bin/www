@@ -2,11 +2,11 @@
 var debug = require('debug')('my-application');
 var app = require('../app');
 
-var pubsub = require('../pubsub');
+var pubsub = require('../modules/pubsub');
 
 app.set('port', process.env.PORT || 3000);
 
-require('../db').init(function(err, db){
+require('../modules/db').init(function(err, db){
   if (err)
     throw err;
 

@@ -1,13 +1,13 @@
 express = require 'express'
 router = express.Router()
 
-mongo = require('../db')
+mongo = require('../modules/db')
 BSON = require('mongodb').BSONPure
 
-pubsub = require '../pubsub'
+pubsub = require '../modules/pubsub'
 
 expressJwt = require 'express-jwt'
-secret = require('../auth').getTokenSecret()
+secret = require('../modules/auth').getTokenSecret()
 
 # Get all polls
 router.get '/', (req, res) ->

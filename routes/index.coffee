@@ -4,7 +4,7 @@ router = express.Router()
 jwt = require 'jsonwebtoken'
 expressJwt = require 'express-jwt'
 
-auth = require '../auth'
+auth = require '../modules/auth'
 
 router.get '/', (req, res) ->
   res.render 'index'
